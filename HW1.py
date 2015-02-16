@@ -82,7 +82,7 @@ def resist(inp, outp):
 
     # Выведем время работы
     finish = (time.time() - start) * 10 ** 3    
-    print(finish)
+    print(fihish)
 
 if __name__ == "__main__":
     resist(sys.argv[1], sys.argv[2])
