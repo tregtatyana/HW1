@@ -21,7 +21,8 @@ def resist(inp, outp):
             for (x, y) in st.items():
                 if x == "id":
                     n = int(y)
-            k_nonet = k # последний элемент с "net"
+            # последний элемент с "net"
+            k_nonet = k
     # заполним d
     for i in range(n):
         d.append([])
@@ -30,7 +31,6 @@ def resist(inp, outp):
                 d[i].append(float('+inf'))
             else:
                 d[i].append(0)
-                
     for k_nonet in node.childNodes:
         st = k_nonet.attributes or {}
         name = k_nonet.nodeName
@@ -43,7 +43,6 @@ def resist(inp, outp):
                 elif x == "net_to":
                     v = int(y) - 1
             d[u][v] = d[v][u] = 1 / (1 / d[u][v] + 1 / t)
-            
         elif name == "diode":
             for (x, y) in st.items():
                 if x == "resistance":
@@ -56,7 +55,6 @@ def resist(inp, outp):
                     t_inv = float(y)
             d[u][v] = 1 / (1 / d[u][v] + 1 / t)
             d[v][u] = 1 / (1 / d[v][u] + 1 / t_inv)
-            
     # Теперь d заполнен начальными значениями
     for m in range(n):
         for i in range(n):
@@ -72,17 +70,15 @@ def resist(inp, outp):
                     d[i][j] = float("+inf")
                 else:
                     d[i][j] = 1 / (1 / d[i][j] + 1 / summ)
-                    
     # Вывод результатов в таблицу
     with open(outp, "w") as f:
         for line_n in range(n):
             for column_n in range(n-1):
                 f.write(str(round(d[line_n][column_n], 6)) + ", ")
             f.write(str(round(d[line_n][n-1], 6)) + "\n")
-
     # Выведем время работы
-    finish = (time.time() - start) * 10 ** 3    
-    print(fihish)
+    finish = (time.time() - start) * 10 ** 3
+    print(finish)
 
 if __name__ == "__main__":
     resist(sys.argv[1], sys.argv[2])
